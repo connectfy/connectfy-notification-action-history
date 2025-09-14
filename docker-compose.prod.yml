@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  notifications-service:
+    container_name: notifications-service-prod
+    image: connectfy/notifications-prod
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    depends_on:
+      - mongo
+    restart: always
+    networks:
+      - notifications-network
+      - notifications-db-network
+      - api-gateway-network
+      - kafka_network
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - .env.production
+
+  mongo:
+    image: mongo:6.0
+    container_name: notifications-mongo-prod
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - notifications-network
+      - notifications-db-network
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: notificationsDb
+    ports:
+      - "25201:27017"
+
+volumes:
+  mongo-data:
+
+networks:
+  notifications-network:
+    external: true
+  notifications-db-network:
+  api-gateway-network:
+    external: true
+  kafka_network:
+    external: true
