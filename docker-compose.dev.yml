@@ -12,7 +12,6 @@ services:
       - mongo
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules
     networks:
       - notifications-network
       - notifications-db-network
