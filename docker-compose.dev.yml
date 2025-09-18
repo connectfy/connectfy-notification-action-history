@@ -2,8 +2,8 @@ version: '3.8'
 
 services:
   notifications-service:
-    container_name: notifications-service-dev
-    image: connectfy/notifications-dev
+    container_name: connectfy-notifications-service-dev
+    image: connectfy/connectfy-notifications-dev
     build:
       context: .
       dockerfile: Dockerfile.dev
@@ -13,26 +13,26 @@ services:
     volumes:
       - .:/usr/src/app
     networks:
-      - notifications-network
+      - connectfy-notifications-network
       - notifications-db-network
-      - kafka_network
-      - api-gateway-network
+      - connectfy_kafka_network
+      - connectfy-api-gateway-network
     environment:
       - NODE_ENV=development
-      - CHOKIDAR_USEPOLLING=true
-      - CHOKIDAR_INTERVAL=1000
-      - WATCHPACK_POLLING=true
-    command: npx nodemon --legacy-watch --watch src --ext ts,js,json --exec "npm run start:dev"
+    #   - CHOKIDAR_USEPOLLING=true
+    #   - CHOKIDAR_INTERVAL=1000
+    #   - WATCHPACK_POLLING=true
+    # command: npx nodemon --legacy-watch --watch src --ext ts,js,json --exec "npm run start:dev"
     env_file:
       - .env.development
 
   mongo:
     image: mongo:6.0
-    container_name: notifications-mongo-dev
+    container_name: connectfy-notifications-mongo-dev
     volumes:
       - mongo-data:/data/db
     networks:
-      - notifications-network
+      - connectfy-notifications-network
       - notifications-db-network
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
@@ -45,10 +45,10 @@ volumes:
   mongo-data:
 
 networks:
-  notifications-network:
+  connectfy-notifications-network:
     external: true
   notifications-db-network:
-  kafka_network:
+  connectfy_kafka_network:
     external: true
-  api-gateway-network:
+  connectfy-api-gateway-network:
     external: true
