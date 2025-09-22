@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { ValidationMessages } from '@/src/common/constants/validation.messages';
+import { ValidationMessages } from '@common/constants/validation.messages';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class SendMailDto {
