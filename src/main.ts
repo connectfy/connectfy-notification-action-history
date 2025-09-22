@@ -6,30 +6,30 @@ import { AllExceptionsFilter } from './exception-filters/all.filter';
 
 async function bootstrap() {
   // Start Kafka Microservice
-  // const kafkaApp = await NestFactory.createMicroservice<MicroserviceOptions>(
-  //   AppModule,
-  //   {
-  //     transport: Transport.KAFKA,
-  //     options: {
-  //       client: {
-  //         clientId: 'notification-action-history',
-  //         brokers: ['connectfy-kafka-0:9092', 'connectfy-kafka-1:9092'],
-  //       },
-  //       consumer: {
-  //         groupId: 'consumer-notification-action-history',
-  //         allowAutoTopicCreation: false,
-  //       },
-  //       run: {
-  //         autoCommit: false,
-  //       },
-  //     },
-  //   },
-  // );
+  const kafkaApp = await NestFactory.createMicroservice<MicroserviceOptions>(
+    AppModule,
+    {
+      transport: Transport.KAFKA,
+      options: {
+        client: {
+          clientId: 'notification-action-history',
+          brokers: ['kafka-0:9092', 'kafka-1:9092'],
+        },
+        consumer: {
+          groupId: 'consumer-notification-action-history',
+          allowAutoTopicCreation: false,
+        },
+        run: {
+          autoCommit: false,
+        },
+      },
+    },
+  );
 
-  // kafkaApp.useGlobalFilters(new AllExceptionsFilter());
+  kafkaApp.useGlobalFilters(new AllExceptionsFilter());
 
-  // await kafkaApp.listen();
-  // console.log('✅ Kafka Microservice is running');
+  await kafkaApp.listen();
+  console.log('✅ Kafka Microservice is running');
 
   // Start TCP Microservice
   const PORT = Number(process.env.PORT);
