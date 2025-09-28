@@ -12,11 +12,11 @@ async function bootstrap() {
       transport: Transport.KAFKA,
       options: {
         client: {
-          clientId: 'notification-action-history',
+          clientId: 'connectfy-notification',
           brokers: ['kafka-0:9092', 'kafka-1:9092'],
         },
         consumer: {
-          groupId: 'consumer-notification-action-history',
+          groupId: 'consumer-connectfy-notification',
           allowAutoTopicCreation: false,
         },
         run: {

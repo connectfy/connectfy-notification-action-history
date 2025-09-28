@@ -10,7 +10,7 @@ import { throwError, Observable } from 'rxjs';
 import {
   ExceptionMessages,
   ExceptionTypes,
-} from 'src/common/constants/exception.constants';
+} from '@common/constants/exception.constants';
 import { HttpStatus } from '@nestjs/common';
 
 @Catch()
