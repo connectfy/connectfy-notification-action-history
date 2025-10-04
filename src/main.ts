@@ -1,5 +1,6 @@
-import { NestFactory } from '@nestjs/core';
+import i18n from './i18n';
 import { AppModule } from './app.module';
+import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { HttpExceptionFilter } from './exception-filters/http.filter';
 import { AllExceptionsFilter } from './exception-filters/all.filter';
@@ -51,6 +52,7 @@ async function bootstrap() {
 
   await tcpApp.listen();
 
+  console.log(`i18n is working... should be used like this ==> `, i18n.t("email_messages.signup_verify.greeting", { lng: "en" }))
   console.log(`✅ NODE_ENV => `, NODE_ENV);
   console.log(`✅ Server is working on ${PORT} port`);
 }
