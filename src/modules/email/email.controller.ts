@@ -12,7 +12,6 @@ export class EmailController {
     new ValidationPipe({
       whitelist: true,
       transform: true,
-      forbidNonWhitelisted: true,
     }),
   )
   async sendMail(@Payload() data: SendMailDto) {
