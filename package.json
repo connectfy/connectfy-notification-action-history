@@ -30,7 +30,7 @@
     "@nestjs/platform-express": "^11.0.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
-    "connectfy-i18n": "^0.0.20",
+    "connectfy-i18n": "^0.0.23",
     "connectfy-shared": "^0.0.10",
     "i18next": "^25.5.3",
     "kafkajs": "^2.2.4",
