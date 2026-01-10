@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { EmailModule } from './modules/email/email.module';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { ENV } from './common/constants/constants';
 
 @Module({
   imports: [
@@ -13,8 +14,8 @@ import { MailerModule } from '@nestjs-modules/mailer';
     MongooseModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
-        uri: config.get<string>('MONGO_URI'),
-        dbName: 'notificationsDb',
+        uri: config.get<string>(ENV.CORE.DATABASE.MONGO.URI),
+        dbName: ENV.CORE.DATABASE.MONGO.DB_NAME,
       }),
     }),
     MailerModule.forRootAsync({
@@ -22,11 +23,11 @@ import { MailerModule } from '@nestjs-modules/mailer';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         transport: {
-          host: config.get<string>('EMAIL_HOST'),
-          secure: config.get<string>('NODE_ENV') === 'production',
+          host: config.get<string>(ENV.NOTIFICATION.EMAIL.HOST),
+          secure: config.get<string>(ENV.CORE.APP.NODE_ENV) === 'production',
           auth: {
-            user: config.get<string>('EMAIL_USER'),
-            pass: config.get<string>('EMAIL_PASS'),
+            user: config.get<string>(ENV.NOTIFICATION.EMAIL.USER),
+            pass: config.get<string>(ENV.NOTIFICATION.EMAIL.PASS),
           },
         },
       }),
