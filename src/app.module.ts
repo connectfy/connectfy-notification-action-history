@@ -15,7 +15,7 @@ import { ENV } from './common/constants/constants';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         uri: config.get<string>(ENV.CORE.DATABASE.MONGO.URI),
-        dbName: ENV.CORE.DATABASE.MONGO.DB_NAME,
+        dbName: config.get<string>(ENV.CORE.DATABASE.MONGO.DB_NAME),
       }),
     }),
     MailerModule.forRootAsync({
