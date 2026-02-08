@@ -4,6 +4,7 @@ import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { HttpExceptionFilter } from './exception-filters/http.filter';
 import { AllExceptionsFilter } from './exception-filters/all.filter';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   // Start Kafka Microservice
@@ -49,10 +50,16 @@ async function bootstrap() {
 
   // Filter
   tcpApp.useGlobalFilters(new HttpExceptionFilter());
+  tcpApp.useGlobalPipes(
+    new ValidationPipe({ whitelist: true, transform: true }),
+  );
 
   await tcpApp.listen();
 
-  console.log(`i18n is working... should be used like this ==> `, i18n.t("email_messages.signup_verify.greeting", { lng: "en" }))
+  console.log(
+    `i18n is working... should be used like this ==> `,
+    i18n.t('email_messages.signup_verify.greeting', { lng: 'en' }),
+  );
   console.log(`✅ NODE_ENV => `, NODE_ENV);
   console.log(`✅ Server is working on ${PORT} port`);
 }
