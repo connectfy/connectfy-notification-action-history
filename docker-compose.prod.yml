@@ -14,7 +14,7 @@ services:
       - connectfy-notifications-network
       - notifications-db-network
       - connectfy-api-gateway-network
-      - connectfy_kafka_network
+      - connectfy-kafka-network
     environment:
       - NODE_ENV=production
     env_file:
@@ -33,7 +33,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: password
       MONGO_INITDB_DATABASE: notificationsDb
     ports:
-      - "25201:27017"
+      - '25201:27017'
 
 volumes:
   mongo-data:
@@ -44,5 +44,5 @@ networks:
   notifications-db-network:
   connectfy-api-gateway-network:
     external: true
-  connectfy_kafka_network:
+  connectfy-kafka-network:
     external: true
