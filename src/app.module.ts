@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { EmailModule } from './modules/email/email.module';
 import { MailerModule } from '@nestjs-modules/mailer';
-import { ENV } from './common/constants/constants';
+import { ENV } from 'connectfy-shared';
 
 @Module({
   imports: [

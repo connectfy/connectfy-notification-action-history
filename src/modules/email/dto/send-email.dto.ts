@@ -1,31 +1,18 @@
-import { Transform } from 'class-transformer';
-import { ValidationMessages } from '@common/constants/validation.messages';
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
-import { stringTransform } from '@/src/common/functions/transform';
+import { FieldValidator, FIELD_TYPE } from 'connectfy-shared';
 
 export class SendMailDto {
-  @Transform(({ key, value }) => stringTransform({ key, value }))
-  @IsString({ message: ValidationMessages.STRING('from') })
-  @IsNotEmpty({ message: ValidationMessages.REQUIRED('from') })
+  @FieldValidator({ type: FIELD_TYPE.STRING })
   from: string;
 
-  @Transform(({ key, value }) => stringTransform({ key, value }))
-  @IsEmail({}, { message: ValidationMessages.EMAIL('to') })
-  @IsNotEmpty({ message: ValidationMessages.REQUIRED('to') })
+  @FieldValidator({ type: FIELD_TYPE.EMAIL })
   to: string;
 
-  @Transform(({ key, value }) => stringTransform({ key, value }))
-  @IsString({ message: ValidationMessages.STRING('sender') })
-  @IsNotEmpty({ message: ValidationMessages.REQUIRED('sender') })
+  @FieldValidator({ type: FIELD_TYPE.STRING })
   sender: string;
 
-  @Transform(({ key, value }) => stringTransform({ key, value }))
-  @IsString({ message: ValidationMessages.STRING('subject') })
-  @IsNotEmpty({ message: ValidationMessages.REQUIRED('subject') })
+  @FieldValidator({ type: FIELD_TYPE.STRING })
   subject: string;
 
-  @Transform(({ key, value }) => stringTransform({ key, value }))
-  @IsString({ message: ValidationMessages.STRING('html') })
-  @IsNotEmpty({ message: ValidationMessages.REQUIRED('html') })
+  @FieldValidator({ type: FIELD_TYPE.STRING })
   html: string;
 }
