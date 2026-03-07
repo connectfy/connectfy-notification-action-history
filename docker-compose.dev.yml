@@ -1,15 +1,10 @@
-version: '3.8'
-
 services:
   notification-action-history-service:
     container_name: connectfy-notification-action-history-service-dev
-    image: connectfy/connectfy-notification-action-history-dev
     build:
       context: .
       dockerfile: Dockerfile.dev
     restart: unless-stopped
-    depends_on:
-      - mongo
     volumes:
       - .:/usr/src/app
     networks:
@@ -17,13 +12,6 @@ services:
       - notifications-db-network
       - connectfy-kafka-network
       - connectfy-api-gateway-network
-    environment:
-      - NODE_ENV=development
-      - PORT=7000
-    #   - CHOKIDAR_USEPOLLING=true
-    #   - CHOKIDAR_INTERVAL=1000
-    #   - WATCHPACK_POLLING=true
-    # command: npx nodemon --legacy-watch --watch src --ext ts,js,json --exec "npm run start:dev"
     env_file:
       - .env.development
     ports:
@@ -49,7 +37,6 @@ volumes:
 
 networks:
   connectfy-notification-action-history-network:
-    external: true
   notifications-db-network:
   connectfy-kafka-network:
     external: true

@@ -1,38 +1,27 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { EmailModule } from './modules/email/email.module';
 import { MailerModule } from '@nestjs-modules/mailer';
-import { ENV } from 'connectfy-shared';
+import { ENVIRONMENT_VARIABLES } from './common/constants/environment-variables';
+import { ModulesModule } from './modules/modules.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      envFilePath: `.env.${process.env.NODE_ENV || 'development'}`,
-      isGlobal: true,
+    MongooseModule.forRoot(ENVIRONMENT_VARIABLES.MONGO_URI, {
+      dbName: ENVIRONMENT_VARIABLES.DB_NAME,
     }),
-    MongooseModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
-        uri: config.get<string>(ENV.CORE.DATABASE.MONGO.URI),
-        dbName: config.get<string>(ENV.CORE.DATABASE.MONGO.DB_NAME),
-      }),
-    }),
-    MailerModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
-        transport: {
-          host: config.get<string>(ENV.NOTIFICATION.EMAIL.HOST),
-          secure: config.get<string>(ENV.CORE.APP.NODE_ENV) === 'production',
-          auth: {
-            user: config.get<string>(ENV.NOTIFICATION.EMAIL.USER),
-            pass: config.get<string>(ENV.NOTIFICATION.EMAIL.PASS),
-          },
+    MailerModule.forRoot({
+      transport: {
+        host: ENVIRONMENT_VARIABLES.EMAIL_HOST,
+        secure: ENVIRONMENT_VARIABLES.NODE_ENV === 'production',
+        auth: {
+          user: ENVIRONMENT_VARIABLES.EMAIL_USER,
+          pass: ENVIRONMENT_VARIABLES.EMAIL_PASS,
         },
-      }),
+      },
     }),
-    EmailModule,
+
+    // src/modules
+    ModulesModule,
   ],
 })
 export class AppModule {}
