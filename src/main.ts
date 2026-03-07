@@ -13,11 +13,11 @@ async function bootstrap() {
       transport: Transport.KAFKA,
       options: {
         client: {
-          clientId: 'connectfy-notification',
+          clientId: 'connectfy-notification-action-history',
           brokers: ['kafka-0:9092', 'kafka-1:9092'],
         },
         consumer: {
-          groupId: 'consumer-connectfy-notification',
+          groupId: 'consumer-connectfy-notification-action-history',
           allowAutoTopicCreation: false,
         },
         run: {
@@ -41,7 +41,7 @@ async function bootstrap() {
     {
       transport: Transport.TCP,
       options: {
-        host: 'notifications-service',
+        host: 'notification-action-history-service',
         port: PORT,
       },
     },

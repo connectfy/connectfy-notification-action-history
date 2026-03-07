@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  notifications-service:
-    container_name: connectfy-notifications-service-prod
-    image: connectfy/connectfy-notifications-prod
+  notification-action-history-service:
+    container_name: connectfy-notification-action-history-service-prod
+    image: connectfy/connectfy-notification-action-history-prod
     build:
       context: .
       dockerfile: Dockerfile.prod
@@ -11,7 +11,7 @@ services:
       - mongo
     restart: always
     networks:
-      - connectfy-notifications-network
+      - connectfy-notification-action-history-network
       - notifications-db-network
       - connectfy-api-gateway-network
       - connectfy-kafka-network
@@ -22,11 +22,11 @@ services:
 
   mongo:
     image: mongo:6.0
-    container_name: connectfy-notifications-mongo-prod
+    container_name: connectfy-notification-action-history-mongo-prod
     volumes:
       - mongo-data:/data/db
     networks:
-      - connectfy-notifications-network
+      - connectfy-notification-action-history-network
       - notifications-db-network
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
@@ -39,7 +39,7 @@ volumes:
   mongo-data:
 
 networks:
-  connectfy-notifications-network:
+  connectfy-notification-action-history-network:
     external: true
   notifications-db-network:
   connectfy-api-gateway-network:
