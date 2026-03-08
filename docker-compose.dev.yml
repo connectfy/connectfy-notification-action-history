@@ -8,37 +8,37 @@ services:
     volumes:
       - .:/usr/src/app
     networks:
-      - connectfy-notification-action-history-network
-      - notifications-db-network
+      - connectfy-core-network
       - connectfy-kafka-network
-      - connectfy-api-gateway-network
+      - notification-db-network
     env_file:
       - .env.development
     ports:
-      - '7000:7000'
+      - "7000:7000"
 
   mongo:
-    image: mongo:6.0
+    image: mongo:6
     container_name: connectfy-notification-action-history-mongo-dev
     volumes:
       - mongo-data:/data/db
     networks:
-      - connectfy-notification-action-history-network
-      - notifications-db-network
+      - notification-db-network
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
       MONGO_INITDB_DATABASE: notificationsDb
     ports:
-      - '25201:27017'
+      - "25201:27017"
 
 volumes:
   mongo-data:
 
 networks:
-  connectfy-notification-action-history-network:
-  notifications-db-network:
+  connectfy-core-network:
+    external: true
+
   connectfy-kafka-network:
     external: true
-  connectfy-api-gateway-network:
+
+  notification-db-network:
     external: true
